@@ -3,7 +3,7 @@
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=KHU-VLL.DeltaDirect)
 [![arXiv](https://img.shields.io/badge/arXiv-2605.22823-b31b1b.svg)](https://arxiv.org/abs/2605.22823)
 
-Official implementation of **"Which Way Did It Move?"**
+Official implementation of **"Which Way Did It Move? Diagnosing and Overcoming Directional Motion Blindness in Video-LLMs"**
 
 A study on how Video-LLMs perceive and reason about **motion direction** in videos.
 We probe where directional information lives inside the model, and introduce lightweight
