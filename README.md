@@ -1,6 +1,6 @@
 # Which Way Did It Move? Diagnosing and Overcoming Directional Motion Blindness in Video-LLMs
 
-[Jongseo Lee](https://jong980812.github.io/)<sup>1†</sup>, [Hyuntak Lee](https://hyuntak03.github.io/)<sup>1†</sup>, Sunghun Kim<sup>1</sup>, Sooa Kim<sup>1</sup>, Jihoon Chung<sup>2</sup>, Jinwoo Choi<sup>1\*</sup>
+[Jongseo Lee](https://jong980812.github.io/)<sup>1†</sup>, [Hyuntak Lee](https://hyuntak03.github.io/)<sup>1†</sup>, Sunghun Kim<sup>1</sup>, Sooa Kim<sup>1</sup>, Jihoon Chung<sup>2</sup>, [Jinwoo Choi](https://sites.google.com/site/jchoivision/home?authuser=0)<sup>1\*</sup>
 
 **<sup>1</sup>Kyung Hee University, <sup>2</sup>Princeton University**
 
@@ -8,7 +8,10 @@
 
 NeurIPS 2026
 
-[[`Paper`](https://arxiv.org/abs/2605.22823)] [[`Project`](https://hyuntak03.github.io/DeltaDirect/)] [[`Dataset`](https://huggingface.co/datasets/KHUjongseo/Modirect-family)] [[`BibTeX`](#citing-deltadirect)]
+[[`Paper`](https://arxiv.org/abs/2605.22823)] [[`Project`](https://jong980812.github.io/which-way-did-it-move/)] [[`Dataset`](https://huggingface.co/datasets/KHUjongseo/Modirect-family)] [[`BibTeX`](#citing-deltadirect)]
+
+[![GitHub stars](https://img.shields.io/github/stars/KHU-VLL/DeltaDirect?style=social)](https://github.com/KHU-VLL/DeltaDirect/stargazers)
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=KHU-VLL.DeltaDirect)
 
 ![DeltaDirect overview](img/github-thumbnail.svg?raw=true)
 
