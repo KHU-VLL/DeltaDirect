@@ -8,12 +8,7 @@
 
 NeurIPS 2026
 
-[![arXiv](https://img.shields.io/badge/arXiv-2605.22823-b31b1b?logo=arxiv&logoColor=white)](https://arxiv.org/abs/2605.22823)
-[![Project Page](https://img.shields.io/badge/Project-Page-4285F4?logo=googlechrome&logoColor=white)](https://jong980812.github.io/which-way-did-it-move/)
-[![Dataset](https://img.shields.io/badge/Dataset-MoDirect-FFD21E?logo=huggingface)](https://huggingface.co/datasets/KHUjongseo/Modirect-family)
-[![BibTeX](https://img.shields.io/badge/BibTeX-Cite-6c757d?logo=latex&logoColor=white)](#citing-deltadirect)
-[![GitHub stars](https://img.shields.io/github/stars/KHU-VLL/DeltaDirect?style=flat&label=Stars&color=e3b341&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PHBhdGggZmlsbD0iI2UzYjM0MSIgZD0iTTggLjI1YS43NS43NSAwIDAgMSAuNjczLjQxOGwxLjg4MiAzLjgxNSA0LjIxLjYxMmEuNzUuNzUgMCAwIDEgLjQxNiAxLjI3OWwtMy4wNDYgMi45Ny43MTkgNC4xOTJhLjc1MS43NTEgMCAwIDEtMS4wODguNzkxTDggMTIuMzQ3bC0zLjc2NiAxLjk4YS43NS43NSAwIDAgMS0xLjA4OC0uNzlsLjcyLTQuMTk0TC44MTggNi4zNzRhLjc1Ljc1IDAgMCAxIC40MTYtMS4yOGw0LjIxLS42MTFMNy4zMjcuNjY4QS43NS43NSAwIDAgMSA4IC4yNVoiLz48L3N2Zz4=)](https://github.com/KHU-VLL/DeltaDirect/stargazers)
-![visitors](https://visitor-badge.laobi.icu/badge?page_id=KHU-VLL.DeltaDirect&left_text=Visitors)
+[![arXiv](https://img.shields.io/badge/arXiv-2605.22823-b31b1b?logo=arxiv&logoColor=white)](https://arxiv.org/abs/2605.22823) [![Project Page](https://img.shields.io/badge/Project-Page-4285F4?logo=googlechrome&logoColor=white)](https://jong980812.github.io/which-way-did-it-move/) [![Dataset](https://img.shields.io/badge/Dataset-MoDirect-FFD21E?logo=huggingface)](https://huggingface.co/datasets/KHUjongseo/Modirect-family) [![GitHub stars](https://img.shields.io/github/stars/KHU-VLL/DeltaDirect?style=flat&label=Stars&color=e3b341&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiI+PHBhdGggZmlsbD0iI2UzYjM0MSIgZD0iTTggLjI1YS43NS43NSAwIDAgMSAuNjczLjQxOGwxLjg4MiAzLjgxNSA0LjIxLjYxMmEuNzUuNzUgMCAwIDEgLjQxNiAxLjI3OWwtMy4wNDYgMi45Ny43MTkgNC4xOTJhLjc1MS43NTEgMCAwIDEtMS4wODguNzkxTDggMTIuMzQ3bC0zLjc2NiAxLjk4YS43NS43NSAwIDAgMS0xLjA4OC0uNzlsLjcyLTQuMTk0TC44MTggNi4zNzRhLjc1Ljc1IDAgMCAxIC40MTYtMS4yOGw0LjIxLS42MTFMNy4zMjcuNjY4QS43NS43NSAwIDAgMSA4IC4yNVoiLz48L3N2Zz4=)](https://github.com/KHU-VLL/DeltaDirect/stargazers) ![visitors](https://visitor-badge.laobi.icu/badge?page_id=KHU-VLL.DeltaDirect&left_text=Visitors)
 
 ![DeltaDirect overview](img/github-thumbnail.svg?raw=true)
 
