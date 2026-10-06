@@ -1,22 +1,161 @@
-# DeltaDirect
+# Which Way Did It Move? Diagnosing and Overcoming Directional Motion Blindness in Video-LLMs
 
-![visitors](https://visitor-badge.laobi.icu/badge?page_id=KHU-VLL.DeltaDirect)
-[![arXiv](https://img.shields.io/badge/arXiv-2605.22823-b31b1b.svg)](https://arxiv.org/abs/2605.22823)
+**<sup>1</sup>Kyung Hee University, <sup>2</sup>Princeton University**
 
-Official implementation of **"Which Way Did It Move? Diagnosing and Overcoming Directional Motion Blindness in Video-LLMs"**
+[Jongseo Lee](https://jong980812.github.io/)<sup>1†</sup>, [Hyuntak Lee](https://hyuntak03.github.io/)<sup>1†</sup>, Sunghun Kim<sup>1</sup>, Sooa Kim<sup>1</sup>, Jihoon Chung<sup>2</sup>, Jinwoo Choi<sup>1\*</sup>
 
-A study on how Video-LLMs perceive and reason about **motion direction** in videos.
-We probe where directional information lives inside the model, and introduce lightweight
-modules that strengthen direction-sensitive representations without retraining the backbone.
+<sup>†</sup>Equal contribution, <sup>\*</sup>Corresponding author
 
-## Paper
-[arXiv:2605.22823](https://arxiv.org/abs/2605.22823)
+NeurIPS 2026
 
-## Code
-Coming soon.
+[[`Paper`](https://arxiv.org/abs/2605.22823)] [[`Project`](https://hyuntak03.github.io/DeltaDirect/)] [[`Dataset`](https://huggingface.co/datasets/KHUjongseo/Modirect-family)] [[`BibTeX`](#citing-deltadirect)]
 
-## Data & Checkpoints
-Coming soon.
+![DeltaDirect overview](img/github-thumbnail.svg?raw=true)
 
-## Citation
-Coming soon.
+PyTorch implementation of **DeltaDirect**. For details, see the paper: **[Which Way Did It Move? Diagnosing and Overcoming Directional Motion Blindness in Video-LLMs](https://arxiv.org/abs/2605.22823)**.
+
+Video-LLMs often cannot tell which way an object moves, a failure we call *directional motion blindness*. We trace it to a *direction binding gap*: the model sees the direction but fails to say it. **DeltaDirect** is a simple training objective that teaches the model direction from frame-to-frame feature changes. Trained only on synthetic videos, it improves accuracy from 25.9% to 85.9% on SynBench and by 21.4 points on RealBench.
+
+This repository contains the code for instruction tuning [LLaVA-Video-7B](https://huggingface.co/lmms-lab/LLaVA-Video-7B-Qwen2) on MoDirect-Inst, with DeltaDirect or without it as a baseline.
+
+## Installation
+
+The code was tested with Python 3.11, PyTorch 2.9.0 and CUDA 12.8. Other versions may be compatible.
+
+```bash
+conda create -n deltadirect python=3.11 -y
+conda activate deltadirect
+
+git clone https://github.com/KHU-VLL/DeltaDirect.git && cd DeltaDirect
+pip install -e ".[train]"
+```
+
+## Getting Started
+
+### Data preparation
+
+Download MoDirect (about 5GB) from [Hugging Face](https://huggingface.co/datasets/KHUjongseo/Modirect-family) into `data/MoDirect`.
+Log in first, since anonymous downloads of this many files are rate-limited.
+
+```bash
+huggingface-cli login
+huggingface-cli download KHUjongseo/Modirect-family --repo-type dataset --local-dir data/MoDirect
+```
+
+Training only needs MoDirect-Inst. To skip MoDirect-Bench, add `--include "MoDirect-Inst/*"`.
+
+If you store the data elsewhere, set `json_path` in [scripts/train/configs/data/modirect_inst.yaml](scripts/train/configs/data/modirect_inst.yaml) and `VIDEO_FOLDER` in the training config.
+See [MoDirect Dataset](#modirect-dataset) for the directory structure and annotation format.
+
+### Training
+
+```bash
+bash scripts/train/train.sh scripts/train/configs/llava_video_7b_deltadirect.sh
+```
+
+Hyperparameters are set in [the config](scripts/train/configs/llava_video_7b_deltadirect.sh). Set `USE_DELTA_DIRECT=false` to train the baseline without DeltaDirect.
+
+### Loading a trained checkpoint
+
+```python
+from llava.model.builder import load_pretrained_model
+
+tokenizer, model, image_processor, _ = load_pretrained_model(
+    model_path="work_dirs/<EXP_NAME>",
+    model_base="lmms-lab/LLaVA-Video-7B-Qwen2",
+    model_name="llava-qwen-lora",
+    device_map="cuda",
+)
+```
+
+## MoDirect Dataset
+
+MoDirect is available on [Hugging Face](https://huggingface.co/datasets/KHUjongseo/Modirect-family) and consists of two parts:
+
+- **MoDirect-Inst**: 100K synthetic videos with instruction-tuning conversations and per-frame 2D motion vectors
+- **MoDirect-Bench**: a multiple-choice benchmark for motion direction, with SynBench and RealBench
+
+### Composition
+
+| | Subset | Object | Background | # QA | Choices |
+|:---|:---:|:---:|:---:|---:|:---:|
+| **MoDirect-Inst** | | shape | synthetic | 100,000 | |
+| **SynBench** | P-Syn | shape | color | 6,000 | 4-way |
+| | P-Real | shape | Places365 | 6,000 | 4-way |
+| | C-Syn | COCO object | color | 6,000 | 4-way |
+| | C-Real | COCO object | Places365 | 6,000 | 4-way |
+| **RealBench** | SSv2 | | | 722 | 2-way |
+| | KTH | | | 899 | 2-way |
+| | TOMATO | | | 403 | 3-7-way |
+
+### Directory structure
+
+```
+data/MoDirect
+├── MoDirect-Inst
+│   ├── MoDirect-Inst.json
+│   ├── metadata.json
+│   └── videos
+│       ├── 000/000000.mp4
+│       └── ...
+└── MoDirect-Bench
+    ├── SynBench
+    │   ├── P-Syn.json, P-Real.json, C-Syn.json, C-Real.json
+    │   ├── metadata
+    │   └── videos/{P-Syn,P-Real,C-Syn,C-Real}
+    └── RealBench
+        ├── SSv2.json, KTH.json, TOMATO.json
+        └── videos/{KTH,TOMATO}
+```
+
+`video` paths in each JSON are relative to `MoDirect-Inst/` or `MoDirect-Bench/`.
+
+### SSv2 videos for RealBench
+
+SSv2 videos are not included because of the Something-Something V2 license.
+Download them from [Qualcomm](https://www.qualcomm.com/developer/software/something-something-v-2-dataset), convert `<video_id>.webm` to mp4, and place each file at its `video` path in `SSv2.json`
+(e.g., `data/MoDirect/MoDirect-Bench/RealBench/videos/SSv2/left/10012.mp4`).
+
+### Annotation format
+
+`MoDirect-Inst.json` follows the LLaVA conversation format with an additional `direction_gt` field.
+
+```json
+{
+  "id": "modirect_inst_000000",
+  "video": "videos/000/000000.mp4",
+  "conversations": [
+    {"from": "human", "value": "<image>\nWhich direction does the object move? Options: A. No Movement, B. Right, C. Lower-Right, D. Leftward, E. Up Answer with the option letter only."},
+    {"from": "gpt", "value": "C"}
+  ],
+  "direction_gt": [[0.728, 0.685], [0.619, 0.785], [0.736, 0.677], [0.709, 0.705], [0.672, 0.740], [0.704, 0.710], [0.735, 0.678]]
+}
+```
+
+- `direction_gt` is the unit motion vector (x, y) between each pair of adjacent frames, so an 8-frame video has 7 vectors.
+- Videos of a static object have no `direction_gt` and are trained with the language modeling loss only.
+
+## License
+
+The code is licensed under the [Apache 2.0 license](LICENSE).
+
+## Acknowledgements
+
+This project is built upon the following works:
+- [LLaVA-NeXT](https://github.com/LLaVA-VL/LLaVA-NeXT): Base codebase and LLaVA-Video model
+- [COCO](https://cocodataset.org), [Places365](http://places2.csail.mit.edu), [Something-Something V2](https://www.qualcomm.com/developer/software/something-something-v-2-dataset), [KTH](https://www.csc.kth.se/cvap/actions/), [TOMATO](https://github.com/yale-nlp/TOMATO): Source data of MoDirect-Bench
+
+We thank all authors who contributed to these foundational projects.
+
+## Citing DeltaDirect
+
+If you use DeltaDirect or MoDirect in your research, please use the following BibTeX entry.
+
+```bibtex
+@inproceedings{lee2026whichway,
+  title     = {Which Way Did It Move? Diagnosing and Overcoming Directional Motion Blindness in Video-LLMs},
+  author    = {Lee, Jongseo and Lee, Hyuntak and Kim, Sunghun and Kim, Sooa and Chung, Jihoon and Choi, Jinwoo},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2026},
+}
+```
