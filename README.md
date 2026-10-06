@@ -1,8 +1,8 @@
 # Which Way Did It Move? Diagnosing and Overcoming Directional Motion Blindness in Video-LLMs
 
-**<sup>1</sup>Kyung Hee University, <sup>2</sup>Princeton University**
-
 [Jongseo Lee](https://jong980812.github.io/)<sup>1†</sup>, [Hyuntak Lee](https://hyuntak03.github.io/)<sup>1†</sup>, Sunghun Kim<sup>1</sup>, Sooa Kim<sup>1</sup>, Jihoon Chung<sup>2</sup>, Jinwoo Choi<sup>1\*</sup>
+
+**<sup>1</sup>Kyung Hee University, <sup>2</sup>Princeton University**
 
 <sup>†</sup>Equal contribution, <sup>\*</sup>Corresponding author
 
@@ -12,11 +12,9 @@ NeurIPS 2026
 
 ![DeltaDirect overview](img/github-thumbnail.svg?raw=true)
 
-PyTorch implementation of **DeltaDirect**. For details, see the paper: **[Which Way Did It Move? Diagnosing and Overcoming Directional Motion Blindness in Video-LLMs](https://arxiv.org/abs/2605.22823)**.
+PyTorch implementation of **DeltaDirect** for instruction tuning [LLaVA-Video-7B](https://huggingface.co/lmms-lab/LLaVA-Video-7B-Qwen2) on MoDirect-Inst, with a baseline trained without it. For details, see the paper: **[Which Way Did It Move? Diagnosing and Overcoming Directional Motion Blindness in Video-LLMs](https://arxiv.org/abs/2605.22823)**.
 
 Video-LLMs often cannot tell which way an object moves, a failure we call *directional motion blindness*. We trace it to a *direction binding gap*: the model sees the direction but fails to say it. **DeltaDirect** is a simple training objective that teaches the model direction from frame-to-frame feature changes. Trained only on synthetic videos, it improves accuracy from 25.9% to 85.9% on SynBench and by 21.4 points on RealBench.
-
-This repository contains the code for instruction tuning [LLaVA-Video-7B](https://huggingface.co/lmms-lab/LLaVA-Video-7B-Qwen2) on MoDirect-Inst, with DeltaDirect or without it as a baseline.
 
 ## Installation
 
@@ -32,7 +30,7 @@ pip install -e ".[train]"
 
 ### Data preparation
 
-Download MoDirect from [Hugging Face](https://huggingface.co/datasets/KHUjongseo/Modirect-family) into `data/MoDirect`.
+Download MoDirect into `data/MoDirect`.
 
 ```bash
 huggingface-cli download KHUjongseo/Modirect-family --repo-type dataset --local-dir data/MoDirect
@@ -82,7 +80,8 @@ MoDirect is available on [Hugging Face](https://huggingface.co/datasets/KHUjongs
 
 </details>
 
-### Annotation format
+<details>
+<summary><b>Annotation format</b></summary>
 
 `MoDirect-Inst.json` follows the LLaVA conversation format with an additional `direction_gt` field.
 
@@ -100,6 +99,8 @@ MoDirect is available on [Hugging Face](https://huggingface.co/datasets/KHUjongs
 
 - `direction_gt` is the unit motion vector (x, y) between each pair of adjacent frames, so an 8-frame video has 7 vectors.
 - Videos of a static object have no `direction_gt` and are trained with the language modeling loss only.
+
+</details>
 
 ## License
 
