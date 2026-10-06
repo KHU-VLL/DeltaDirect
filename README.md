@@ -20,8 +20,6 @@ This repository contains the code for instruction tuning [LLaVA-Video-7B](https:
 
 ## Installation
 
-The code was tested with Python 3.11, PyTorch 2.9.0 and CUDA 12.8. Other versions may be compatible.
-
 ```bash
 conda create -n deltadirect python=3.11 -y
 conda activate deltadirect
@@ -34,18 +32,11 @@ pip install -e ".[train]"
 
 ### Data preparation
 
-Download MoDirect (about 5GB) from [Hugging Face](https://huggingface.co/datasets/KHUjongseo/Modirect-family) into `data/MoDirect`.
-Log in first, since anonymous downloads of this many files are rate-limited.
+Download MoDirect from [Hugging Face](https://huggingface.co/datasets/KHUjongseo/Modirect-family) into `data/MoDirect`.
 
 ```bash
-huggingface-cli login
 huggingface-cli download KHUjongseo/Modirect-family --repo-type dataset --local-dir data/MoDirect
 ```
-
-Training only needs MoDirect-Inst. To skip MoDirect-Bench, add `--include "MoDirect-Inst/*"`.
-
-If you store the data elsewhere, set `json_path` in [scripts/train/configs/data/modirect_inst.yaml](scripts/train/configs/data/modirect_inst.yaml) and `VIDEO_FOLDER` in the training config.
-See [MoDirect Dataset](#modirect-dataset) for the directory structure and annotation format.
 
 ### Training
 
