@@ -28,7 +28,7 @@ pip install -e ".[train]"
 
 ## Getting Started
 
-### Data preparation.
+### Data preparation
 
 Download MoDirect into `data/MoDirect`.
 
