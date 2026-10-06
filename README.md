@@ -66,46 +66,21 @@ MoDirect is available on [Hugging Face](https://huggingface.co/datasets/KHUjongs
 - **MoDirect-Inst**: 100K synthetic videos with instruction-tuning conversations and per-frame 2D motion vectors
 - **MoDirect-Bench**: a multiple-choice benchmark for motion direction, with SynBench and RealBench
 
-### Composition
+<details>
+<summary><b>Composition</b></summary>
 
-| | Subset | Object | Background | # QA | Choices |
-|:---|:---:|:---:|:---:|---:|:---:|
-| **MoDirect-Inst** | | shape | synthetic | 100,000 | |
-| **SynBench** | P-Syn | shape | color | 6,000 | 4-way |
-| | P-Real | shape | Places365 | 6,000 | 4-way |
-| | C-Syn | COCO object | color | 6,000 | 4-way |
-| | C-Real | COCO object | Places365 | 6,000 | 4-way |
-| **RealBench** | SSv2 | | | 722 | 2-way |
-| | KTH | | | 899 | 2-way |
-| | TOMATO | | | 403 | 3-7-way |
+| | Subset | # QA | Choices |
+|:---|:---:|---:|:---:|
+| **MoDirect-Inst** | | 100,000 | |
+| **SynBench** | P-Syn | 6,000 | 4-way |
+| | P-Real | 6,000 | 4-way |
+| | C-Syn | 6,000 | 4-way |
+| | C-Real | 6,000 | 4-way |
+| **RealBench** | SSv2 | 722 | 2-way |
+| | KTH | 899 | 2-way |
+| | TOMATO | 403 | 3-7-way |
 
-### Directory structure
-
-```
-data/MoDirect
-├── MoDirect-Inst
-│   ├── MoDirect-Inst.json
-│   ├── metadata.json
-│   └── videos
-│       ├── 000/000000.mp4
-│       └── ...
-└── MoDirect-Bench
-    ├── SynBench
-    │   ├── P-Syn.json, P-Real.json, C-Syn.json, C-Real.json
-    │   ├── metadata
-    │   └── videos/{P-Syn,P-Real,C-Syn,C-Real}
-    └── RealBench
-        ├── SSv2.json, KTH.json, TOMATO.json
-        └── videos/{KTH,TOMATO}
-```
-
-`video` paths in each JSON are relative to `MoDirect-Inst/` or `MoDirect-Bench/`.
-
-### SSv2 videos for RealBench
-
-SSv2 videos are not included because of the Something-Something V2 license.
-Download them from [Qualcomm](https://www.qualcomm.com/developer/software/something-something-v-2-dataset), convert `<video_id>.webm` to mp4, and place each file at its `video` path in `SSv2.json`
-(e.g., `data/MoDirect/MoDirect-Bench/RealBench/videos/SSv2/left/10012.mp4`).
+</details>
 
 ### Annotation format
 
